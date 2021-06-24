@@ -46,6 +46,8 @@ instance Monad m => Monad (STT s m) where
   STT m >>= k = STT $ \st ->
     do STTRet new_st a <- m st
        unSTT (k a) new_st
+
+instance MonadFail m => MonadFail (STT s m) where
   fail msg = lift (fail msg)
 
 instance MonadTrans (STT s) where
